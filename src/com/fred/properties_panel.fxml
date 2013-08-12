@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+
+<fx:root type="javafx.scene.layout.HBox" xmlns:fx="http://javafx.com/fxml">
+  <children>
+  	<CheckBox fx:id="chkActive"/>
+  	<Label text="Frequency: "/>
+    <TextField fx:id="txtFrequency" prefWidth="100.0" />
+    <Label text="Waveform: "/>
+    <TextField fx:id="txtWaveForm" prefWidth="100.0" />
+    <Label text="Amplitude: "/>
+    <TextField fx:id="txtAmplitude" prefWidth="100.0" />
+  </children>
+</fx:root>
