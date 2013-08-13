@@ -15,6 +15,10 @@ public class NoteUtil extends Number {
 		return getFrequency(noteNumber);
 	}
 	
+	public static String frequencyToNote(double frequency) {
+		return makeNoteSymbol(getPitch(frequency));
+	}
+	
 	public static final double getPitch(double d) {
 		return 57D + FACTOR * Math.log(d / (double) frequencyOfA4);
 	}
@@ -121,9 +125,7 @@ public class NoteUtil extends Number {
 		return Integer.toString(intValue());
 	}
 
-	public String toNoteSymbol() {
-		return makeNoteSymbol(getPitch(frequency));
-	}
+
 
 	public static void main(String[] args) {
 		System.out.println("A4 Freq: " + NoteUtil.noteToFrequency("A4") + ", Pitch: " + NoteUtil.noteToPitch("A4"));

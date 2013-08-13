@@ -16,7 +16,7 @@ public class SignalTest extends Application {
 	public void start(Stage stage) throws Exception {
 		GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("signal_test.fxml"));
 		
-		Scene scene = new Scene(root, 600, 600);
+		Scene scene = new Scene(root, 600, 800);
 
 		stage.setTitle("FXML Welcome");
 		stage.setScene(scene);

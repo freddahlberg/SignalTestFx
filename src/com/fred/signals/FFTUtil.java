@@ -32,10 +32,10 @@ public class FFTUtil {
 	public static double[] getMainFrequencies(Complex[] fftResponse, int numOfFreqeuncies) {
 
 		double[] mainFrequencies = new double[numOfFreqeuncies];
-		double[] magnitudes = new double[fftResponse.length / 2];
+		double[] magnitudes = new double[fftResponse.length];
 
 		// get magnitudes of frequencies
-		for (int i = 0; i < fftResponse.length / 2; i++) {
+		for (int i = 0; i < fftResponse.length; i++) {
 			magnitudes[i] = fftResponse[i].abs();
 		}
 
@@ -43,7 +43,7 @@ public class FFTUtil {
 			// find max magnitude (we call it beta)
 			int betaPos = 0;
 
-			for (int i = 0; i < fftResponse.length / 2; i++) {
+			for (int i = 0; i < fftResponse.length; i++) {
 				if (magnitudes[i] > magnitudes[betaPos]) {
 					betaPos = i;
 				}

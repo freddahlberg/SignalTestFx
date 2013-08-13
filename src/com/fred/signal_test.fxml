@@ -14,49 +14,80 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<GridPane fx:controller="com.fred.SignalTestController"
-	xmlns:fx="http://javafx.com/fxml" alignment="TOP_LEFT" hgap="10" vgap="10"
-	styleClass="root">
+<GridPane fx:controller="com.fred.SignalTestController" xmlns:fx="http://javafx.com/fxml" alignment="TOP_LEFT" hgap="10" vgap="10" styleClass="root">
 	<padding>
 		<Insets top="25" right="25" bottom="10" left="25" />
 	</padding>
 	<gridLinesVisible>false</gridLinesVisible>
 
-	<VBox fx:id="components" GridPane.columnIndex="0"
-		GridPane.rowIndex="0" GridPane.columnSpan="2">
+	<VBox fx:id="components" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
 		<children>
 		</children>
 	</VBox>
 
-	<HBox GridPane.columnIndex="0" GridPane.rowIndex="1"
-		GridPane.columnSpan="2">
+	<HBox GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2">
 		<CheckBox fx:id="chkNoise" text="Noise: "></CheckBox>
 		<Label text="Noise level: "></Label>
 		<TextField fx:id="txtNoiseLevel" text="0.5"></TextField>
 	</HBox>
 
-	<Label text="Frame size: " GridPane.columnIndex="0"
-		GridPane.rowIndex="2"></Label>
-	<TextField fx:id="txtFrameSize" GridPane.columnIndex="1"
-		GridPane.rowIndex="2" text="1024"></TextField>
+	<Label text="Frame size: " GridPane.columnIndex="0" GridPane.rowIndex="2"></Label>
+	<TextField fx:id="txtFrameSize" GridPane.columnIndex="1" GridPane.rowIndex="2" text="256"></TextField>
 
-	<Label GridPane.columnIndex="0" GridPane.rowIndex="3"
-		text="Sampling rate: "></Label>
-	<TextField fx:id="txtSamplingRate" GridPane.columnIndex="1"
-		GridPane.rowIndex="3" text="44100"></TextField>
+	<Label GridPane.columnIndex="0" GridPane.rowIndex="3" text="Sampling rate: "></Label>
+	<TextField fx:id="txtSamplingRate" GridPane.columnIndex="1" GridPane.rowIndex="3" text="2205"></TextField>
 
 
-	<HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="1"
-		GridPane.rowIndex="4">
+	<HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="1" GridPane.rowIndex="4">
 		<Button text="Update" onAction="#handleUpdateButtonAction" />
 	</HBox>
 
-	<WaveFormPanel fx:id="signalPanel" GridPane.columnIndex="0"
-		GridPane.rowIndex="5" GridPane.columnSpan="2" minHeight="100"></WaveFormPanel>
-	<SpectrumPanel fx:id="spectrumPanel"
-		GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2"
-		minHeight="100"></SpectrumPanel>
+	<WaveFormPanel fx:id="signalPanel" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2" minHeight="100"></WaveFormPanel>
+	<SpectrumPanel fx:id="spectrumPanel" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2" minHeight="100"></SpectrumPanel>
+
+	<TableView fx:id="tableResults" GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.columnSpan="2" minHeight="300">
+		<columns>
+			<TableColumn fx:id="frequencyColumn" text="Frequency">
+				<cellValueFactory>
+					<PropertyValueFactory property="frequency" />
+				</cellValueFactory>
+			</TableColumn>
+			<TableColumn text="Note">
+				<cellValueFactory>
+					<PropertyValueFactory property="note" />
+				</cellValueFactory>
+			</TableColumn>
+			<TableColumn text="Pitch">
+				<cellValueFactory>
+					<PropertyValueFactory property="pitch" />
+				</cellValueFactory>
+			</TableColumn>
+			<TableColumn text="Error (cents)">
+				<cellValueFactory>
+					<PropertyValueFactory property="error" />
+				</cellValueFactory>
+			</TableColumn>
+		</columns>
+<!-- 		<items> -->
+<!-- 			<FXCollections fx:factory="observableArrayList"> -->
+<!-- 				<SignalOut frequency="440.7" /> -->
+<!-- 			</FXCollections> -->
+<!-- 		</items> -->
+<!-- 			<TableColumn text="Last Name" prefWidth="100"> -->
+<!-- 				<cellValueFactory> -->
+<!-- 					<PropertyValueFactory property="lastName" /> -->
+<!-- 				</cellValueFactory> -->
+<!-- 			</TableColumn> -->
+<!-- 			<TableColumn text="Email Address" prefWidth="200"> -->
+<!-- 				<cellValueFactory> -->
+<!-- 					<PropertyValueFactory property="email" /> -->
+<!-- 				</cellValueFactory> -->
+<!-- 			</TableColumn> -->
+
+	</TableView>
 
 	<stylesheets>
 		<URL value="@Style.css" />
