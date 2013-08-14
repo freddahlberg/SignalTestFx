@@ -16,6 +16,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.ComboBox?>
 
 <GridPane fx:controller="com.fred.SignalTestController" xmlns:fx="http://javafx.com/fxml" alignment="TOP_LEFT" hgap="10" vgap="10" styleClass="root">
 	<padding>
@@ -32,7 +33,9 @@
 		<CheckBox fx:id="chkNoise" text="Noise: "></CheckBox>
 		<Label text="Noise level: "></Label>
 		<TextField fx:id="txtNoiseLevel" text="0.5"></TextField>
+
 	</HBox>
+<!-- 	Endre til SNR og les om SNR -->
 
 	<Label text="Frame size: " GridPane.columnIndex="0" GridPane.rowIndex="2"></Label>
 	<TextField fx:id="txtFrameSize" GridPane.columnIndex="1" GridPane.rowIndex="2" text="256"></TextField>
@@ -45,10 +48,20 @@
 		<Button text="Update" onAction="#handleUpdateButtonAction" />
 	</HBox>
 
-	<WaveFormPanel fx:id="signalPanel" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2" minHeight="100"></WaveFormPanel>
-	<SpectrumPanel fx:id="spectrumPanel" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2" minHeight="100"></SpectrumPanel>
+	<HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="5">
+		<Label text="SNR: ">
+		</Label>
+		<TextField fx:id="txtSNR" editable="false"></TextField>
+		<Label text="SNR in dB: ">
+		</Label>
+		<TextField fx:id="txtSNRInDB" editable="false"></TextField>
+	</HBox>
+	
+	<WaveFormPanel fx:id="signalPanel" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2" minHeight="100"></WaveFormPanel>
+	<SpectrumPanel fx:id="spectrumPanel" GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.columnSpan="2" minHeight="100"></SpectrumPanel>
+	<ComboBox fx:id="cmbInterpolationTechniques" GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.columnSpan="2"></ComboBox>
 
-	<TableView fx:id="tableResults" GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.columnSpan="2" minHeight="300">
+	<TableView fx:id="tableResults" GridPane.columnIndex="0" GridPane.rowIndex="10" GridPane.columnSpan="2" minHeight="300">
 		<columns>
 			<TableColumn fx:id="frequencyColumn" text="Frequency">
 				<cellValueFactory>
@@ -71,22 +84,6 @@
 				</cellValueFactory>
 			</TableColumn>
 		</columns>
-<!-- 		<items> -->
-<!-- 			<FXCollections fx:factory="observableArrayList"> -->
-<!-- 				<SignalOut frequency="440.7" /> -->
-<!-- 			</FXCollections> -->
-<!-- 		</items> -->
-<!-- 			<TableColumn text="Last Name" prefWidth="100"> -->
-<!-- 				<cellValueFactory> -->
-<!-- 					<PropertyValueFactory property="lastName" /> -->
-<!-- 				</cellValueFactory> -->
-<!-- 			</TableColumn> -->
-<!-- 			<TableColumn text="Email Address" prefWidth="200"> -->
-<!-- 				<cellValueFactory> -->
-<!-- 					<PropertyValueFactory property="email" /> -->
-<!-- 				</cellValueFactory> -->
-<!-- 			</TableColumn> -->
-
 	</TableView>
 
 	<stylesheets>

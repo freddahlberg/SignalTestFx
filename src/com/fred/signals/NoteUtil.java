@@ -16,7 +16,13 @@ public class NoteUtil extends Number {
 	}
 	
 	public static String frequencyToNote(double frequency) {
-		return makeNoteSymbol(getPitch(frequency));
+		double pitch = getPitch(frequency);
+		if(pitch > -120){
+		return makeNoteSymbol(pitch);
+		}
+		else{
+			return "ERROR";
+		}
 	}
 	
 	public static final double getPitch(double d) {
