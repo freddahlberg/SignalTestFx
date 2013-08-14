@@ -43,26 +43,21 @@ public class GeneratedSignal {
 	};
 	SigFunction[] functs = new SigFunction[] { fsine, ftriangle, fsquare, fsawtooth };
 
-	public GeneratedSignal(int bufferSize, int samplingRate, List<SignalComponentProperties> signalComponents, boolean noiseEnabled, double noiseLevel) {
-		signal = new short[bufferSize];
-
+	public GeneratedSignal(int frameSize, int samplingRate, List<SignalComponentProperties> signalComponents, boolean noiseEnabled, double snrIn) {
+		signal = new short[frameSize];
+		double[] tempSignal = new double[frameSize];
+		
 		sample_interval = 1.0 / samplingRate;
 
-		double sumOfAmplitudes = 0;
+		double maxAmplitude = 0;
 		for (SignalComponentProperties props : signalComponents) {
 			if (props.isActive()) {
-				sumOfAmplitudes += props.getAmplitude();
+				maxAmplitude += props.getAmplitude();
 			}
 		}
-		if (noiseEnabled) {
-			sumOfAmplitudes += noiseLevel;
-		}
-
-		double signalSquaredSum = 0;
-		double noiseSquaredSum = 0;
 
 		int time = (int)(Math.random() * samplingRate); // this is used so that the sample frame starts at a random point in time
-		for (int n = 0; n < bufferSize; n++) {
+		for (int n = 0; n < frameSize; n++) {
 			double sample = 0;
 
 			for (SignalComponentProperties props : signalComponents) {
@@ -71,28 +66,47 @@ public class GeneratedSignal {
 					sample += props.getAmplitude() * sf.f(props.getFrequency(), (n + time) * sample_interval);
 				}
 			}
-
-			signalSquaredSum += Math.pow(sample, 2);
-
-			// Add noise if requested
-			if (noiseEnabled) {
-				double noise = (Math.random() - 0.5) * 2 * noiseLevel; // number between -1 and 1
+			
+			tempSignal[n] = sample;
+		}
+		
+		
+		// Add noise if requested
+		if (noiseEnabled) {
+			// Calculate signal energy
+			double signalSquaredSum = 0;
+			double noiseSquaredSum = 0;
+			
+			for(double sample : tempSignal){
+				signalSquaredSum += Math.pow(sample, 2);
+			}
+			
+			// calculate required noise level to get the desired SNR
+			double noiseLevel = Math.sqrt(3 * signalSquaredSum / (snrIn * frameSize));
+			
+			for(int i = 0 ; i < tempSignal.length ; i++){
+				double noise = (Math.random() - 0.5) * 2 * noiseLevel; // number between -noiseLevel and noiseLevel
 				noiseSquaredSum += Math.pow(noise, 2);
-				sample += noise;
+				tempSignal[i] += noise;
 			}
 
-			// Divide by sum of amplitudes so that signal varies between -1 and 1
-			sample /= (sumOfAmplitudes);
+			// Control calculation of the snr
+			if(noiseSquaredSum != 0){
+				snr = signalSquaredSum / noiseSquaredSum;
+			}
+			else{
+				snr = 0;
+			}
+			
+			maxAmplitude += noiseLevel;
+		}
+		
+		// scale the signal
+		for(int i = 0 ; i < tempSignal.length ; i++){
+			signal[i] = (short) (scale_mult * tempSignal[i] / maxAmplitude);
+		}
+		
 
-			signal[n] = (short) (sample * scale_mult);
-		}
-
-		if(noiseSquaredSum != 0){
-			snr = signalSquaredSum / noiseSquaredSum;
-		}
-		else{
-			snr = 0;
-		}
 	}
 
 	public short[] getSignal() {

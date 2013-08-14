@@ -36,7 +36,7 @@ public class SignalTestController {
 	CheckBox chkNoise;
 
 	@FXML
-	TextField txtNoiseLevel;
+	TextField txtSNRIn;
 
 	@FXML
 	TextField txtSamplingRate;
@@ -75,13 +75,13 @@ public class SignalTestController {
 		}
 
 		boolean noise = chkNoise.isSelected();
-		double noiseLevel = Double.parseDouble(txtNoiseLevel.getText());
+		double snrIn = Double.parseDouble(txtSNRIn.getText());
 
 		int frameSize = Integer.parseInt(txtFrameSize.getText());
 		int samplingRate = Integer.parseInt(txtSamplingRate.getText());
 
 		// generate signal
-		GeneratedSignal sg = new GeneratedSignal(frameSize, samplingRate, props, noise, noiseLevel);
+		GeneratedSignal sg = new GeneratedSignal(frameSize, samplingRate, props, noise, snrIn);
 		short[] signal = sg.getSignal();
 		signalPanel.draw(signal);
 		txtSNR.setText(Double.toString(sg.getSnr()));

@@ -31,8 +31,8 @@
 
 	<HBox GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2">
 		<CheckBox fx:id="chkNoise" text="Noise: "></CheckBox>
-		<Label text="Noise level: "></Label>
-		<TextField fx:id="txtNoiseLevel" text="0.5"></TextField>
+		<Label text="SNR: "></Label>
+		<TextField fx:id="txtSNRIn" text="10"></TextField>
 
 	</HBox>
 <!-- 	Endre til SNR og les om SNR -->
