@@ -24,7 +24,7 @@ public class SpectrumPanel extends Pane{
 		this.getChildren().add(new Circle(150, Color.web("white")));
 	}
 	
-	public void draw(float[] fftResponse){
+	public void draw(float[] fftResponse, boolean logScale){
 		
 		this.getChildren().clear();
 		Canvas canvas = new Canvas(getWidth(), getHeight());
@@ -42,9 +42,14 @@ public class SpectrumPanel extends Pane{
 		double maxMagnitude = 0;
 		for (int i = 0; i < fftResponse.length / 2; i++) {
 			double magnitude = Math.sqrt(Math.pow(fftResponse[i * 2], 2) + Math.pow(fftResponse[i * 2 + 1], 2));
-			magnitudes[i] = magnitude;
-			if(magnitude > maxMagnitude){
-				maxMagnitude = magnitude;
+			if(logScale){
+				magnitudes[i] = Math.log(magnitude);
+			}else{
+				magnitudes[i] = magnitude;	
+			}
+			
+			if(magnitudes[i] > maxMagnitude){
+				maxMagnitude = magnitudes[i];
 			}
 		}
 		

@@ -17,74 +17,116 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 
-<GridPane fx:controller="com.fred.SignalTestController" xmlns:fx="http://javafx.com/fxml" alignment="TOP_LEFT" hgap="10" vgap="10" styleClass="root">
+<GridPane fx:controller="com.fred.SignalTestController" xmlns:fx="http://javafx.com/fxml" styleClass="root">
+
 	<padding>
-		<Insets top="25" right="25" bottom="10" left="25" />
+		<Insets top="25" right="25" bottom="25" left="25" />
 	</padding>
-	<gridLinesVisible>false</gridLinesVisible>
+	<columnConstraints>
+		<ColumnConstraints percentWidth="50"></ColumnConstraints>
+		<ColumnConstraints percentWidth="50"></ColumnConstraints>
+	</columnConstraints>
+	<gridLinesVisible>true</gridLinesVisible>
 
-	<VBox fx:id="components" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
-		<children>
-		</children>
-	</VBox>
-
-	<HBox GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2">
-		<CheckBox fx:id="chkNoise" text="Noise: "></CheckBox>
-		<Label text="SNR: "></Label>
-		<TextField fx:id="txtSNRIn" text="10"></TextField>
-
-	</HBox>
-<!-- 	Endre til SNR og les om SNR -->
-
-	<Label text="Frame size: " GridPane.columnIndex="0" GridPane.rowIndex="2"></Label>
-	<TextField fx:id="txtFrameSize" GridPane.columnIndex="1" GridPane.rowIndex="2" text="256"></TextField>
-
-	<Label GridPane.columnIndex="0" GridPane.rowIndex="3" text="Sampling rate: "></Label>
-	<TextField fx:id="txtSamplingRate" GridPane.columnIndex="1" GridPane.rowIndex="3" text="2205"></TextField>
-
-
-	<HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="1" GridPane.rowIndex="4">
+	<HBox spacing="10" alignment="BASELINE_LEFT" minHeight="50" GridPane.columnIndex="0" GridPane.rowIndex="0">
+		<Button text="Start" onAction="#handleStartButtonAction" />
+		<Button text="Stop" onAction="#handleStopButtonAction" />
 		<Button text="Update" onAction="#handleUpdateButtonAction" />
 	</HBox>
+	<VBox GridPane.rowIndex="1" GridPane.columnIndex="0">
 
-	<HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="5">
-		<Label text="SNR: ">
-		</Label>
-		<TextField fx:id="txtSNR" editable="false"></TextField>
-		<Label text="SNR in dB: ">
-		</Label>
-		<TextField fx:id="txtSNRInDB" editable="false"></TextField>
-	</HBox>
-	
-	<WaveFormPanel fx:id="signalPanel" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2" minHeight="100"></WaveFormPanel>
-	<SpectrumPanel fx:id="spectrumPanel" GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.columnSpan="2" minHeight="100"></SpectrumPanel>
-	<ComboBox fx:id="cmbInterpolationTechniques" GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.columnSpan="2"></ComboBox>
+		<Label id="heading" text="Input"></Label>
 
-	<TableView fx:id="tableResults" GridPane.columnIndex="0" GridPane.rowIndex="10" GridPane.columnSpan="2" minHeight="300">
-		<columns>
-			<TableColumn fx:id="frequencyColumn" text="Frequency">
-				<cellValueFactory>
-					<PropertyValueFactory property="frequency" />
-				</cellValueFactory>
-			</TableColumn>
-			<TableColumn text="Note">
-				<cellValueFactory>
-					<PropertyValueFactory property="note" />
-				</cellValueFactory>
-			</TableColumn>
-			<TableColumn text="Pitch">
-				<cellValueFactory>
-					<PropertyValueFactory property="pitch" />
-				</cellValueFactory>
-			</TableColumn>
-			<TableColumn text="Error (cents)">
-				<cellValueFactory>
-					<PropertyValueFactory property="error" />
-				</cellValueFactory>
-			</TableColumn>
-		</columns>
-	</TableView>
+		<VBox fx:id="components" spacing="10">
+			<children>
+			</children>
+		</VBox>
+
+		<HBox minHeight="30" spacing="10">
+			<CheckBox fx:id="chkNoise" text="Noise: "></CheckBox>
+			<Label text="SNR: "></Label>
+			<TextField fx:id="txtSNRIn" text="10"></TextField>
+
+		</HBox>
+<!-- 	Endre til SNR og les om SNR -->
+
+		<HBox minHeight="30" spacing="10">
+			<Label text="Frame size: "></Label>
+			<TextField fx:id="txtFrameSize" text="256"></TextField>
+		</HBox>
+
+		<HBox minHeight="30" spacing="10">
+			<Label text="Sampling rate: "></Label>
+			<TextField fx:id="txtSamplingRate" text="2205"></TextField>
+		</HBox>
+
+		<HBox minHeight="30" spacing="10">
+			<Label text="Window Function: "></Label>
+			<ComboBox fx:id="cmbWindowFunction"></ComboBox>
+		</HBox>
+
+
+		<HBox minHeight="30" spacing="10">
+			<Label text="Interpolation technique: "></Label>
+			<ComboBox fx:id="cmbInterpolationTechniques"></ComboBox>
+		</HBox>
+		
+	</VBox>
+
+	<VBox GridPane.rowIndex="1" GridPane.columnIndex="1">
+		<Label id="heading" text="Output"></Label>
+
+		<HBox spacing="10">
+			<Label text="SNR: ">
+			</Label>
+			<TextField fx:id="txtSNR" editable="false"></TextField>
+			<Label text="SNR in dB: ">
+			</Label>
+			<TextField fx:id="txtSNRInDB" editable="false"></TextField>
+		</HBox>
+
+		<WaveFormPanel fx:id="signalPanel" minHeight="100"></WaveFormPanel>
+		<SpectrumPanel fx:id="spectrumPanel" minHeight="100"></SpectrumPanel>
+
+
+		<TableView fx:id="tableResults" minHeight="300">
+			<columns>
+				<TableColumn fx:id="frequencyColumn" text="Frequency">
+					<cellValueFactory>
+						<PropertyValueFactory property="frequency" />
+					</cellValueFactory>
+				</TableColumn>
+				<TableColumn text="Note">
+					<cellValueFactory>
+						<PropertyValueFactory property="note" />
+					</cellValueFactory>
+				</TableColumn>
+				<TableColumn text="Pitch">
+					<cellValueFactory>
+						<PropertyValueFactory property="pitch" />
+					</cellValueFactory>
+				</TableColumn>
+				<TableColumn text="Error (cents)">
+					<cellValueFactory>
+						<PropertyValueFactory property="error" />
+					</cellValueFactory>
+				</TableColumn>
+				<TableColumn text="Error mean">
+					<cellValueFactory>
+						<PropertyValueFactory property="mean" />
+					</cellValueFactory>
+				</TableColumn>
+				<TableColumn text="Error var">
+					<cellValueFactory>
+						<PropertyValueFactory property="stdDev" />
+					</cellValueFactory>
+				</TableColumn>
+			</columns>
+		</TableView>
+	</VBox>
 
 	<stylesheets>
 		<URL value="@Style.css" />

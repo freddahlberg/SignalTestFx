@@ -70,10 +70,12 @@ public class FFTUtil {
 	private static double calculateCorrection(Complex alpha, Complex beta, Complex gamma, InterpolationTechnique interpolationTechnique, int frameSize) {
 
 		switch (interpolationTechnique) {
-		case JACOBSEN:
-			return calcJacobsen(alpha, beta, gamma);// gamma.minus(alpha).divides(beta.times(2).minus(alpha.plus(gamma))).re();
+		case JACOBSEN_3:
+			return calcJacobsen3(alpha, beta, gamma);// gamma.minus(alpha).divides(beta.times(2).minus(alpha.plus(gamma))).re();
+		case JACOBSEN_5_HANNING:
+			return calcJacobsen5Hanning(alpha, beta, gamma);// gamma.minus(alpha).divides(beta.times(2).minus(alpha.plus(gamma))).re();
 		case JACOBSEN_WITH_BIAS_CORRECTION:
-			return (Math.tan(Math.PI/frameSize)/(Math.PI/frameSize)) * calcJacobsen(alpha, beta, gamma);
+			return (Math.tan(Math.PI/frameSize)/(Math.PI/frameSize)) * calcJacobsen3(alpha, beta, gamma);
 		case QUINN1:
 		{
 			// from http://www.dspguru.com/dsp/howtos/how-to-interpolate-fft-peak
@@ -131,10 +133,15 @@ public class FFTUtil {
 		return 0;
 	}
 
-	private static double calcJacobsen(Complex alpha, Complex beta, Complex gamma){
+	private static double calcJacobsen3(Complex alpha, Complex beta, Complex gamma){
 		return gamma.minus(alpha).divides(beta.times(2).minus(alpha.plus(gamma))).re();
 	}
 
+	private static double calcJacobsen5Hanning(Complex alpha, Complex beta, Complex gamma){
+		double q = .55;
+		return -alpha.minus(gamma).times(q).divides(beta.times(2).plus(alpha.plus(gamma))).re();
+	}
+	
 	private static double tau(double x){
 		return 0.25 * Math.log(3 * Math.pow(x, 2) + 6 * x + 1) - (Math.sqrt(6) / 24)	* Math.log((x + 1 - Math.sqrt(2 / 3)) / (x + 1 + Math.sqrt(2 / 3)));
 	}

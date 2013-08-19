@@ -14,7 +14,7 @@
 		<Label text="Frequency: " />
 		<TextField fx:id="txtFrequency" prefWidth="100.0" />
 		<Label text="Waveform: " />
-		<TextField fx:id="txtWaveForm" prefWidth="100.0" />
+		<TextField fx:id="txtWaveForm" prefWidth="30" />
 		<Label text="Amplitude: " />
 		<TextField fx:id="txtAmplitude" prefWidth="100.0" />
 	</children>

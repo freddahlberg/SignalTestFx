@@ -3,14 +3,20 @@ package com.fred.signals;
 import java.util.List;
 
 import com.fred.SignalComponentProperties;
+import com.fred.enums.WindowFunction;
 
 public class GeneratedSignal {
 
 	short[] signal;
 	double snr;
-	
+
 	double sample_interval;
 	double scale_mult = Math.pow(2, 15);
+	
+	int frameSize;
+	int samplingRate;
+	
+	
 	SigFunction fsine = new SigFunction() {
 
 		public double f(double f, double t) {
@@ -43,7 +49,11 @@ public class GeneratedSignal {
 	};
 	SigFunction[] functs = new SigFunction[] { fsine, ftriangle, fsquare, fsawtooth };
 
-	public GeneratedSignal(int frameSize, int samplingRate, List<SignalComponentProperties> signalComponents, boolean noiseEnabled, double snrIn) {
+	public GeneratedSignal(int frameSize, int samplingRate, List<SignalComponentProperties> signalComponents, boolean noiseEnabled, double snrIn, WindowFunction windowFunction) {
+		
+		this.frameSize = frameSize;
+		this.samplingRate = samplingRate;
+		
 		signal = new short[frameSize];
 		double[] tempSignal = new double[frameSize];
 		
@@ -106,6 +116,14 @@ public class GeneratedSignal {
 			signal[i] = (short) (scale_mult * tempSignal[i] / maxAmplitude);
 		}
 		
+		// Apply window if not rectangular window
+		if(windowFunction == WindowFunction.HANNING){
+			
+			int size = signal.length;
+			for(int i = 0 ; i < signal.length ; i++){
+				signal[i] = (short)((double)signal[i] * 0.5 * (1 - Math.cos((2 * Math.PI * i)/(size - 1))));
+			}
+		}
 
 	}
 
@@ -124,9 +142,17 @@ public class GeneratedSignal {
 	public void setSnr(double snr) {
 		this.snr = snr;
 	}
-	
+
 	public double getSnrInDB() {
 		return 10 * Math.log10(snr);
+	}
+
+	public int getFrameSize() {
+		return frameSize;
+	}
+
+	public int getSamplingRate() {
+		return samplingRate;
 	}
 
 };
