@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 
-<GridPane fx:controller="com.fred.SignalTestController" xmlns:fx="http://javafx.com/fxml" styleClass="root">
+<fx:root type="javafx.scene.layout.GridPane" xmlns:fx="http://javafx.com/fxml" styleClass="root">
 
 	<padding>
 		<Insets top="25" right="25" bottom="25" left="25" />
@@ -35,6 +35,7 @@
 		<Button text="Start" onAction="#handleStartButtonAction" />
 		<Button text="Stop" onAction="#handleStopButtonAction" />
 		<Button text="Update" onAction="#handleUpdateButtonAction" />
+		<Button text="Reset" onAction="#handleResetButtonAction" />
 	</HBox>
 	<VBox GridPane.rowIndex="1" GridPane.columnIndex="0">
 
@@ -96,32 +97,32 @@
 			<columns>
 				<TableColumn fx:id="frequencyColumn" text="Frequency">
 					<cellValueFactory>
-						<PropertyValueFactory property="frequency" />
+						<PropertyValueFactory property="lastFrequency" />
 					</cellValueFactory>
 				</TableColumn>
 				<TableColumn text="Note">
 					<cellValueFactory>
-						<PropertyValueFactory property="note" />
+						<PropertyValueFactory property="lastNote" />
 					</cellValueFactory>
 				</TableColumn>
 				<TableColumn text="Pitch">
 					<cellValueFactory>
-						<PropertyValueFactory property="pitch" />
+						<PropertyValueFactory property="lastPitch" />
 					</cellValueFactory>
 				</TableColumn>
 				<TableColumn text="Error (cents)">
 					<cellValueFactory>
-						<PropertyValueFactory property="error" />
+						<PropertyValueFactory property="lastError" />
 					</cellValueFactory>
 				</TableColumn>
 				<TableColumn text="Error mean">
 					<cellValueFactory>
-						<PropertyValueFactory property="mean" />
+						<PropertyValueFactory property="meanError" />
 					</cellValueFactory>
 				</TableColumn>
 				<TableColumn text="Error var">
 					<cellValueFactory>
-						<PropertyValueFactory property="stdDev" />
+						<PropertyValueFactory property="stdDevError" />
 					</cellValueFactory>
 				</TableColumn>
 			</columns>
@@ -131,5 +132,5 @@
 	<stylesheets>
 		<URL value="@Style.css" />
 	</stylesheets>
-</GridPane>
+</fx:root>
 

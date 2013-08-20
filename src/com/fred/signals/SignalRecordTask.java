@@ -39,7 +39,7 @@ public class SignalRecordTask extends Task<GeneratedSignal> {
 
 			GeneratedSignal gs = new GeneratedSignal(frameSize, samplingRate, signalComponents, noiseEnabled, snrIn, windowFunction);
 			listener.onSignalUpdated(gs);
-			Thread.sleep(1000);
+			Thread.sleep(100);
 		}
 		return null;
 	}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+
+
+<fx:root type="javafx.scene.layout.GridPane" xmlns:fx="http://javafx.com/fxml">
+
+	<padding>
+		<Insets top="25" right="25" bottom="25" left="25" />
+	</padding>
+	<columnConstraints>
+		<ColumnConstraints percentWidth="50"></ColumnConstraints>
+		<ColumnConstraints percentWidth="50"></ColumnConstraints>
+	</columnConstraints>
+	<gridLinesVisible>true</gridLinesVisible>
+
+	<HBox spacing="10" alignment="BASELINE_LEFT" minHeight="50" GridPane.columnIndex="0" GridPane.rowIndex="0">
+		<Button text="Start" onAction="#handleStartButtonAction" />
+	</HBox>
+
+	<GridPane GridPane.rowIndex="1" GridPane.columnIndex="0" vgap="10" hgap="10">
+		<padding>
+			<Insets top="25" right="25" bottom="25" left="25" />
+		</padding>
+		<columnConstraints>
+			<ColumnConstraints percentWidth="50"></ColumnConstraints>
+			<ColumnConstraints percentWidth="50"></ColumnConstraints>
+		</columnConstraints>
+		<gridLinesVisible>true</gridLinesVisible>
+		<children>
+			<Label text="From bin: " GridPane.rowIndex="0" GridPane.columnIndex="0"></Label>
+			<TextField fx:id="txtFromBin" text="11" GridPane.rowIndex="0" GridPane.columnIndex="1"></TextField>
+			<Label text="To bin: " GridPane.rowIndex="1" GridPane.columnIndex="0"></Label>
+			<TextField fx:id="txtToBin" text="12" GridPane.rowIndex="1" GridPane.columnIndex="1"></TextField>
+			<Label text="Step: " GridPane.rowIndex="2" GridPane.columnIndex="0"></Label>
+			<TextField fx:id="txtStep" text="0.01" GridPane.rowIndex="2" GridPane.columnIndex="1"></TextField>
+			<Label text="Window Function: " GridPane.rowIndex="3" GridPane.columnIndex="0"></Label>
+			<ComboBox fx:id="cmbWindowFunction" GridPane.rowIndex="3" GridPane.columnIndex="1"></ComboBox>
+			<Label text="Interpolation Technique: " GridPane.rowIndex="4" GridPane.columnIndex="0"></Label>
+			<ComboBox fx:id="cmbInterpolationTechniques" GridPane.rowIndex="4" GridPane.columnIndex="1"></ComboBox>
+		</children>
+	</GridPane>
+	<VBox GridPane.rowIndex="1" GridPane.columnIndex="1">
+		<LineChart fx:id="chartBias">
+			<xAxis>
+				<NumberAxis label="Bin number" lowerBound="0" upperBound="3" tickUnit="1" />
+			</xAxis>
+			<yAxis>
+				<NumberAxis label="Bias" lowerBound="0" upperBound="3" tickUnit="1" />
+			</yAxis>
+		</LineChart>
+
+	</VBox>
+</fx:root>
+

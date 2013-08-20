@@ -1,5 +1,6 @@
 package com.fred;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,17 +27,18 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.SortType;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
-public class SignalTestController implements SignalListener{
+public class SignalTestPanel extends GridPane implements SignalListener{
 
-	private boolean running = false;
 	
 	@FXML
 	Pane components;
@@ -83,6 +85,21 @@ public class SignalTestController implements SignalListener{
 
 	private Map<String, SignalOut> lastSignals = new HashMap<String, SignalOut>();
 	
+	
+	public SignalTestPanel() {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("signal_test_panel.fxml"));
+		fxmlLoader.setRoot(this);
+		fxmlLoader.setController(this);
+
+		try {
+			fxmlLoader.load();
+		}
+		catch (IOException exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+	
+	
 	@FXML
 	protected void handleStartButtonAction(ActionEvent event) {
 		
@@ -105,20 +122,6 @@ public class SignalTestController implements SignalListener{
 		signalRecorderthread.setDaemon(true);
 		signalRecorderthread.start();
 		
-//		
-//		running = true;
-//		
-//		while(running){
-//			update();
-//			try {
-//				wait(1000);
-//			}
-//			catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-		
 	}
 
 	@FXML
@@ -132,6 +135,12 @@ public class SignalTestController implements SignalListener{
 		GeneratedSignal gs = getSignal();
 		update(gs);
 	}
+	
+	@FXML
+	protected void handleResetButtonAction(ActionEvent event) {
+		lastSignals = new HashMap<String, SignalOut>();
+	}
+	
 	
 	private GeneratedSignal getSignal(){
 		
@@ -194,47 +203,32 @@ public class SignalTestController implements SignalListener{
 		for(Entry<String, SignalOut> entry : lastSignals.entrySet()){
 			tempLastSignals.put(entry.getKey(), entry.getValue());
 		}
-		
-		Detta funkar!
+
 		// Update output data in table
+		lastSignals.clear();
+		
 		tableResults.getItems().removeAll(tableResults.getItems());
 		for (int i = 0; i < mainFrequencies.length; i++) {
-			SignalOut so = new SignalOut();
+			SignalOut so;
+			// Did we have this note last time?
+			// If we did we want to see the average of the measurements.
+			String note = NoteUtil.frequencyToNote(mainFrequencies[i]);
+			if (tempLastSignals.containsKey(note)) {
+				SignalOut soTemp = tempLastSignals.get(note);
+				so = new SignalOut(soTemp);
+			}else{
+				so = new SignalOut();
+			}
+
 			so.addFrequency(mainFrequencies[i]);
-//			so.setPitch(NoteUtil.getPitch(mainFrequencies[i]));
 			tableResults.getItems().add(so);
+			lastSignals.put(note, so);
 		}
 
 		TableColumn<SignalOut, ?> sortColumnn = tableResults.getColumns().get(0);
 		tableResults.getSortOrder().add(sortColumnn);
 		sortColumnn.setSortType(SortType.ASCENDING);
 		sortColumnn.setSortable(true); // This performs a sort
-		
-		Detta funkar inte! VArfør????
-//		lastSignals.clear();
-//		
-//		tableResults.getItems().removeAll(tableResults.getItems());
-//		for (int i = 0; i < mainFrequencies.length; i++) {
-//			
-//			SignalOut so;
-//			// Did we have this note last time?
-//			// If we did we want to see the average of the measurements.
-//			String note = NoteUtil.frequencyToNote(mainFrequencies[i]);
-//			if(tempLastSignals.containsKey(note)){
-//				so = tempLastSignals.get(note);
-//			}else{
-//				so = new SignalOut();	
-//			}
-//			
-//			so.addFrequency(mainFrequencies[i]);
-//			tableResults.getItems().add(so);
-//			lastSignals.put(note, so);
-//		}
-//		
-//		TableColumn<SignalOut, ?> sortColumnn = tableResults.getColumns().get(0);
-//		tableResults.getSortOrder().add(sortColumnn);
-//		sortColumnn.setSortType(SortType.ASCENDING);
-//		sortColumnn.setSortable(true); // This performs a sort
 	}
 
 	@FXML
