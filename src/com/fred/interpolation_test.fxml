@@ -25,6 +25,7 @@
 
 	<HBox spacing="10" alignment="BASELINE_LEFT" minHeight="50" GridPane.columnIndex="0" GridPane.rowIndex="0">
 		<Button text="Start" onAction="#handleStartButtonAction" />
+		<Button text="Reset" onAction="#handleResetButtonAction" />
 	</HBox>
 
 	<GridPane GridPane.rowIndex="1" GridPane.columnIndex="0" vgap="10" hgap="10">
@@ -47,15 +48,19 @@
 			<ComboBox fx:id="cmbWindowFunction" GridPane.rowIndex="3" GridPane.columnIndex="1"></ComboBox>
 			<Label text="Interpolation Technique: " GridPane.rowIndex="4" GridPane.columnIndex="0"></Label>
 			<ComboBox fx:id="cmbInterpolationTechniques" GridPane.rowIndex="4" GridPane.columnIndex="1"></ComboBox>
+			<Label text="Frame size: " GridPane.rowIndex="5" GridPane.columnIndex="0"></Label>
+			<TextField fx:id="txtFrameSize" GridPane.rowIndex="5" GridPane.columnIndex="1" text="256"></TextField>
+			<Label text="Sampling rate: " GridPane.rowIndex="6" GridPane.columnIndex="0"></Label>
+			<TextField fx:id="txtSamplingRate" GridPane.rowIndex="6" GridPane.columnIndex="1" text="2205"></TextField>
 		</children>
 	</GridPane>
 	<VBox GridPane.rowIndex="1" GridPane.columnIndex="1">
 		<LineChart fx:id="chartBias">
 			<xAxis>
-				<NumberAxis label="Bin number" lowerBound="0" upperBound="3" tickUnit="1" />
+				<NumberAxis label="Bin number" tickUnit="0.1" />
 			</xAxis>
 			<yAxis>
-				<NumberAxis label="Bias" lowerBound="0" upperBound="3" tickUnit="1" />
+				<NumberAxis label="Bias" tickUnit="0.1" />
 			</yAxis>
 		</LineChart>
 

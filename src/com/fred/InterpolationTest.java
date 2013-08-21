@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.text.Position.Bias;
+
 import com.fred.enums.InterpolationTechnique;
 import com.fred.enums.WindowFunction;
 import com.fred.signals.Complex;
@@ -17,6 +19,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -40,7 +46,19 @@ public class InterpolationTest extends GridPane {
 	TextField txtStep;
 	
 	@FXML
-	LineChart<Double, Double> chartBias;
+	TextField txtFrameSize;
+
+	@FXML
+	CheckBox chkNoise;
+
+	@FXML
+	TextField txtSNRIn;
+
+	@FXML
+	TextField txtSamplingRate;
+	
+	@FXML
+	LineChart<Number, Number> chartBias;
 	
 	
 	public InterpolationTest() {
@@ -71,13 +89,25 @@ public class InterpolationTest extends GridPane {
 			cmbInterpolationTechniques.getItems().add(ip);
 		}
 		cmbInterpolationTechniques.getSelectionModel().select(0);
+		
+		// set up chart
+		chartBias.setAnimated(false);
+		chartBias.getXAxis().setAutoRanging(false);
+		chartBias.getXAxis().setTickLabelsVisible(true);
+		chartBias.getYAxis().setAutoRanging(true);
+		NumberAxis yAxis = (NumberAxis)chartBias.getYAxis();
+//		yAxis.setLowerBound(-.3);
+//		yAxis.setUpperBound(0.3);
+		yAxis.setTickLength(0.1);
+		yAxis.setTickMarkVisible(true);
+		chartBias.setCreateSymbols(false);
 	}
 	
 	@FXML
 	protected void handleStartButtonAction(ActionEvent event) {
 		
-		int frameSize = 256;
-		int samplingRate = 2205;
+		int frameSize = Integer.parseInt(txtFrameSize.getText());;
+		int samplingRate = Integer.parseInt(txtSamplingRate.getText());
 		
 		List<SignalComponentProperties> signalComponents = new ArrayList<SignalComponentProperties>();
 	
@@ -90,8 +120,16 @@ public class InterpolationTest extends GridPane {
 		WindowFunction windowFunction = cmbWindowFunction.getValue();
 		InterpolationTechnique  interpolationTechnique = cmbInterpolationTechniques.getValue();
 		
-		List<Double> biases = new ArrayList<Double>();
+		// Set up Chart
+		XYChart.Series<Number, Number> biasSeries = new Series<>();
+		biasSeries.setName("bias");
 		
+		XYChart.Series<Number, Number> measuredSeries = new Series<>();
+		measuredSeries.setName("measured");
+		
+
+		
+		// Iterate between the bins
 		for(double bin = fromBin ; bin < toBin ; bin += step){
 			
 			// Generate a signal with a frequency at fft bin pos
@@ -117,12 +155,26 @@ public class InterpolationTest extends GridPane {
 			Complex[] fftResponse = FFTUtil.getComplexFFTResponse(floatSignal);
 			double[] mainBinFrequencies = FFTUtil.getMainFrequencies(fftResponse, 1, interpolationTechnique);
 			
-			biases.add(bin - mainBinFrequencies[0]);
+			double bias = bin - mainBinFrequencies[0];
+			
+			biasSeries.getData().add(new XYChart.Data<Number, Number>(bin, bias));
+			
+			measuredSeries.getData().add(new XYChart.Data<Number, Number>(bin, mainBinFrequencies[0]));
 		}
 		
-		for(Double bias : biases){
-			System.out.println(bias);
-		}
-		
+		chartBias.getData().add(biasSeries);
+//		chartBias.getData().add(measuredSeries);
+		NumberAxis xAxis = (NumberAxis)chartBias.getXAxis();
+		xAxis.setLowerBound(fromBin);
+		xAxis.setUpperBound(toBin);
 	}
+	
+	@FXML
+	protected void handleResetButtonAction(ActionEvent event) {
+		while(chartBias.getData().size() > 0){
+			chartBias.getData().remove(0);
+		}
+	}
+
+	
 }

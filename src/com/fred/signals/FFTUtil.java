@@ -39,10 +39,14 @@ public class FFTUtil {
 			magnitudes[i] = fftResponse[i].abs();
 		}
 
+		// set dc to 0
+		magnitudes[0] = 0;
+ 
 		for (int freq = 0; freq < numOfFrequencies; freq++) {
 			// find max magnitude (we call it beta)
 			int betaPos = 0;
 
+			// Iterate through all the fft bins.
 			for (int i = 0; i < fftResponse.length; i++) {
 				if (magnitudes[i] > magnitudes[betaPos]) {
 					betaPos = i;
@@ -72,6 +76,8 @@ public class FFTUtil {
 		switch (interpolationTechnique) {
 		case JACOBSEN_3:
 			return calcJacobsen3(alpha, beta, gamma);// gamma.minus(alpha).divides(beta.times(2).minus(alpha.plus(gamma))).re();
+		case JACOBSEN_3_HANNNING:
+			return 2 * calcJacobsen3(alpha, beta, gamma);// gamma.minus(alpha).divides(beta.times(2).minus(alpha.plus(gamma))).re();
 		case JACOBSEN_5_HANNING:
 			return calcJacobsen5Hanning(alpha, beta, gamma);// gamma.minus(alpha).divides(beta.times(2).minus(alpha.plus(gamma))).re();
 		case JACOBSEN_WITH_BIAS_CORRECTION:

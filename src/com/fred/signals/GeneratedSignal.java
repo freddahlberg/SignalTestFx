@@ -116,14 +116,8 @@ public class GeneratedSignal {
 			signal[i] = (short) (scale_mult * tempSignal[i] / maxAmplitude);
 		}
 		
-		// Apply window if not rectangular window
-		if(windowFunction == WindowFunction.HANNING){
-			
-			int size = signal.length;
-			for(int i = 0 ; i < signal.length ; i++){
-				signal[i] = (short)((double)signal[i] * 0.5 * (1 - Math.cos((2 * Math.PI * i)/(size - 1))));
-			}
-		}
+		// Apply window function to signal
+		WindowFunctionUtil.applyToSignal(windowFunction, signal);
 
 	}
 
