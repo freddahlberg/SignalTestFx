@@ -1,6 +1,7 @@
 package com.fred.signals;
 
 import com.fred.enums.InterpolationTechnique;
+import com.fred.enums.WindowFunction;
 
 public class FFTUtil {
 
@@ -75,11 +76,15 @@ public class FFTUtil {
 
 		switch (interpolationTechnique) {
 		case JACOBSEN_3:
-			return calcJacobsen3(alpha, beta, gamma);// gamma.minus(alpha).divides(beta.times(2).minus(alpha.plus(gamma))).re();
+			return calcJacobsen3(alpha, beta, gamma);
 		case JACOBSEN_3_HANNNING:
-			return 2 * calcJacobsen3(alpha, beta, gamma);// gamma.minus(alpha).divides(beta.times(2).minus(alpha.plus(gamma))).re();
+			return 2 * calcJacobsen3(alpha, beta, gamma);
+		case JACOBSEN_3_HAMMING:
+			return 1.81818 * calcJacobsen3(alpha, beta, gamma);
 		case JACOBSEN_5_HANNING:
-			return calcJacobsen5Hanning(alpha, beta, gamma);// gamma.minus(alpha).divides(beta.times(2).minus(alpha.plus(gamma))).re();
+			return calcJacobsen5(alpha, beta, gamma, WindowFunction.HANNING);
+		case JACOBSEN_5_HAMMING:
+			return calcJacobsen5(alpha, beta, gamma, WindowFunction.HAMMING);
 		case JACOBSEN_WITH_BIAS_CORRECTION:
 			return (Math.tan(Math.PI/frameSize)/(Math.PI/frameSize)) * calcJacobsen3(alpha, beta, gamma);
 		case QUINN1:
@@ -143,8 +148,20 @@ public class FFTUtil {
 		return gamma.minus(alpha).divides(beta.times(2).minus(alpha.plus(gamma))).re();
 	}
 
-	private static double calcJacobsen5Hanning(Complex alpha, Complex beta, Complex gamma){
-		double q = .55;
+	private static double calcJacobsen5(Complex alpha, Complex beta, Complex gamma, WindowFunction windowFunction){
+		double q = 1;
+		switch(windowFunction){
+		case HAMMING:
+			q = .60;
+			break;
+		case HANNING:
+			q = .55;
+			break;
+		default:
+			break;
+		
+		}
+		
 		return -alpha.minus(gamma).times(q).divides(beta.times(2).plus(alpha.plus(gamma))).re();
 	}
 	

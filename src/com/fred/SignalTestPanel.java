@@ -75,6 +75,9 @@ public class SignalTestPanel extends GridPane implements SignalListener{
 
 	@FXML
 	TextField txtSNRInDB;
+	
+	@FXML
+	TextField txtBinWidth;
 
 	//	@FXML
 	//	TableColumn<> colFrequency;
@@ -171,7 +174,8 @@ public class SignalTestPanel extends GridPane implements SignalListener{
 		signalPanel.draw(signal);
 		txtSNR.setText(Double.toString(gs.getSnr()));
 		txtSNRInDB.setText(Double.toString(gs.getSnrInDB()));
-
+		txtBinWidth.setText(Double.toString(gs.getSamplingRate() / (double)gs.getFrameSize()));
+		
 		// fft
 		// convert signal to float
 		float[] floatSignal = new float[signal.length];
@@ -237,7 +241,7 @@ public class SignalTestPanel extends GridPane implements SignalListener{
 		// Initialize signal components
 		List<SignalComponentProperties> signalComponents = new ArrayList<SignalComponentProperties>();
 		signalComponents.add(new SignalComponentProperties(true, 0, NoteUtil.noteToFrequency("E2"), 1));
-		signalComponents.add(new SignalComponentProperties(true, 0, NoteUtil.noteToFrequency("B2"), 1));
+		signalComponents.add(new SignalComponentProperties(true, 0, NoteUtil.noteToFrequency("F2"), 1));
 		signalComponents.add(new SignalComponentProperties(true, 0, NoteUtil.noteToFrequency("E3"), 1));
 		signalComponents.add(new SignalComponentProperties(true, 0, NoteUtil.noteToFrequency("G#3"), 1));
 		signalComponents.add(new SignalComponentProperties(true, 0, NoteUtil.noteToFrequency("B3"), 1));

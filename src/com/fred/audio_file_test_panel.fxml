@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.GridPane?>
+
+<fx:root type="javafx.scene.layout.GridPane" xmlns:fx="http://javafx.com/fxml">
+	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
+		<HBox spacing="10">
+			<TextField fx:id="txtPath" minWidth="500"></TextField>
+			<Button  onAction="#handleBrowseButtonAction" text="Browse"></Button>
+		</HBox>
+	</VBox>
+</fx:root>
+

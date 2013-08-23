@@ -88,6 +88,12 @@
 			</Label>
 			<TextField fx:id="txtSNRInDB" editable="false"></TextField>
 		</HBox>
+		
+		<HBox spacing="10">
+			<Label text="Bin width (Hz) : ">
+			</Label>
+			<TextField fx:id="txtBinWidth" editable="false"></TextField>
+		</HBox>
 
 		<WaveFormPanel fx:id="signalPanel" minHeight="100"></WaveFormPanel>
 		<SpectrumPanel fx:id="spectrumPanel" minHeight="100"></SpectrumPanel>

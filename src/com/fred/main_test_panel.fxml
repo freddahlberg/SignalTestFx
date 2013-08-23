@@ -8,17 +8,23 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import com.fred.AudioFileTestPanel?>
 
 
 <GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.fred.MainTestPanel">
 
-   <columnConstraints>
-        <ColumnConstraints  hgrow="ALWAYS" minWidth="10.0" percentWidth="100.0" prefWidth="100.0" />
-    </columnConstraints>
-    
-	<TabPane GridPane.rowIndex="0" GridPane.columnIndex="0" >
-		
+	<columnConstraints>
+		<ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="100.0" prefWidth="100.0" />
+	</columnConstraints>
+
+	<TabPane GridPane.rowIndex="0" GridPane.columnIndex="0">
+
 		<tabs>
+			<Tab text="Audio file" closable="false">
+				<content>
+					<AudioFileTestPanel></AudioFileTestPanel>
+				</content>
+			</Tab>
 			<Tab text="Interpolation" closable="false">
 				<content>
 					<InterpolationTest></InterpolationTest>
@@ -26,7 +32,7 @@
 			</Tab>
 			<Tab text="Signal" closable="false">
 				<content>
-					<SignalTestPanel ></SignalTestPanel>
+					<SignalTestPanel></SignalTestPanel>
 				</content>
 			</Tab>
 		</tabs>
