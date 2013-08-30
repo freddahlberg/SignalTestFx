@@ -2,6 +2,8 @@ package com.fred;
 
 import java.io.IOException;
 
+import com.fred.dsp.signals.SignalComponentProperties;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;

@@ -8,16 +8,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
-import com.fred.enums.InterpolationTechnique;
-import com.fred.enums.WindowFunction;
+import com.fred.dsp.enums.InterpolationTechnique;
+import com.fred.dsp.enums.WindowFunction;
+import com.fred.dsp.signals.Complex;
+import com.fred.dsp.signals.FFTUtil;
+import com.fred.dsp.signals.GeneratedSignal;
+import com.fred.dsp.signals.NoteUtil;
+import com.fred.dsp.signals.SignalComponentProperties;
+import com.fred.dsp.signals.SignalOut;
 import com.fred.panels.SpectrumPanel;
 import com.fred.panels.WaveFormPanel;
-import com.fred.signals.Complex;
-import com.fred.signals.FFTUtil;
-import com.fred.signals.NoteUtil;
-import com.fred.signals.GeneratedSignal;
 import com.fred.signals.SignalListener;
-import com.fred.signals.SignalOut;
 import com.fred.signals.SignalRecordTask;
 
 import edu.emory.mathcs.jtransforms.fft.FloatFFT_1D;

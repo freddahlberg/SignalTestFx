@@ -6,12 +6,12 @@ import java.util.List;
 
 import javax.swing.text.Position.Bias;
 
-import com.fred.enums.InterpolationTechnique;
-import com.fred.enums.WindowFunction;
-import com.fred.signals.Complex;
-import com.fred.signals.FFTUtil;
-import com.fred.signals.GeneratedSignal;
-import com.fred.signals.NoteUtil;
+import com.fred.dsp.enums.InterpolationTechnique;
+import com.fred.dsp.enums.WindowFunction;
+import com.fred.dsp.signals.Complex;
+import com.fred.dsp.signals.FFTUtil;
+import com.fred.dsp.signals.GeneratedSignal;
+import com.fred.dsp.signals.SignalComponentProperties;
 import com.fred.signals.SignalRecordTask;
 
 import edu.emory.mathcs.jtransforms.fft.FloatFFT_1D;

@@ -2,15 +2,13 @@ package com.fred.panels;
 
 import java.util.List;
 
-import com.fred.SignalComponentProperties;
+import com.fred.dsp.signals.SignalComponentProperties;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Control;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 
 public class WaveFormPanel extends Pane{
 

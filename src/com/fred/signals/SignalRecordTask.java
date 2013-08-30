@@ -2,11 +2,11 @@ package com.fred.signals;
 
 import java.util.List;
 
+import com.fred.dsp.enums.WindowFunction;
+import com.fred.dsp.signals.GeneratedSignal;
+import com.fred.dsp.signals.SignalComponentProperties;
+
 import sun.misc.Signal;
-
-import com.fred.SignalComponentProperties;
-import com.fred.enums.WindowFunction;
-
 import javafx.concurrent.Task;
 
 public class SignalRecordTask extends Task<GeneratedSignal> {
